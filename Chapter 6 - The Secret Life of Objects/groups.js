@@ -9,7 +9,7 @@ class Group {
 
     delete(num) {
         if (this.collection.includes(num) == true)
-            this.collection = this.collection.slice(0, this.collection.indexOf(num)).concat(this.collection.slice(this.collection.indexOf(num)))
+            this.collection = this.collection.slice(0, this.collection.indexOf(num)).concat(this.collection.slice(this.collection.indexOf(num + 1)))
     }
 
     has(num) {
@@ -20,10 +20,9 @@ class Group {
 
     static from(obj) {
         let group = []
-        for (let i of obj) {
+        for (let i of obj)
             if (group.includes(i) == false) group.push(i)
         return new Group(group)
-        }
     }
 }
 
