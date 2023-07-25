@@ -3,9 +3,9 @@ function robotTurns(state, robot, memory) {
         if (state.parcels.length == 0) {
             return turn
         }
-        let action = robot(state, memory);
-        state = state.move(action.direction);
-        memory = action.memory;
+        let action = robot(state, memory)
+        state = state.move(action.direction)
+        memory = action.memory
     }
 }
 
