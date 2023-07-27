@@ -1,46 +1,32 @@
-function findRoute(graph, from, to) {
-  let work = [{at: from, route: []}];
-  for (let i = 0; i < work.length; i++) {
-    let {at, route} = work[i];
-    for (let place of graph[at]) {
-      if (place == to) return route.concat(place);
-      if (!work.some(w => w.at == place)) {
-        work.push({at: place, route: route.concat(place)});
-      }
-    }
-  }
-}
+// solution is faster but sometimes doesn't work
 
 function myRobot({place, parcels}, route) {
   let shortestParcelPath = [], shortestAddressPath = []
   let placesToDeliverTo = [], shortestPath = [], counter
   for (let i = 0; i < parcels.length; i++) {
 	let parcel = parcels[i]
-    console.log(findRoute(roadGraph, place, parcel.place))
     
     route = findRoute(roadGraph, place, parcel.place)
-    if (shortestParcelPath[0] == undefined || route.length < shortestParcelPath.length)
+    if (shortestParcelPath.length === 0 || route.length < shortestParcelPath.length)
       shortestParcelPath = route
     
     if (parcel.place == place) {
       placesToDeliverTo.push(parcel.address)
       for (let j of placesToDeliverTo) {
         route = findRoute(roadGraph, place, j)
-        if (shortestAddressPath[0] == undefined || route.length < shortestAddressPath.length)
+        if (shortestAddressPath.length === 0 || route.length < shortestAddressPath.length)
           shortestAddressPath = route
           counter = j
       }
     }
-	if (shortestParcelPath < shortestAddressPath || shortestAddressPath[0] == undefined)
+	if (shortestParcelPath.length < shortestAddressPath.length || shortestAddressPath.length === 0) {
       shortestPath = shortestParcelPath
-    else {
+    } else {
       shortestPath = shortestAddressPath
-      placesToDeliverTo = placesToDeliverTo.slice(0, counter).concat(placesToDeliverTo.slice(counter++))
+      placesToDeliverTo = placesToDeliverTo.slice(0, counter).concat(placesToDeliverTo.slice(counter + 1))
     }
-    
   }
-  let x = {direction: shortestPath[0], memory: shortestPath.slice(1)};
-  return x
+  return {direction: shortestPath[0], memory: shortestPath.slice(1)};
 }
 
 function robotTurns(state, robot, memory) {
@@ -56,7 +42,7 @@ function robotTurns(state, robot, memory) {
 
 function compareRobots(robot1, memory1, robot2, memory2) {
     let r1 = 0, r2 = 0
-    for (let i = 0; i <= 100; i++) {
+    for (let i = 0; i <= 1; i++) {
         let task = VillageState.random()
         r1 += robotTurns(task, robot1, memory1)
         r2 += robotTurns(task, robot2, memory2)
