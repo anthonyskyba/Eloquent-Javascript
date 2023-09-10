@@ -1,4 +1,5 @@
 // Fill in this regular expression.
+// not done (haven't seen solution) will come back later to fix this. Issue is that it works for matching numbers but not all of the string has to match for it to pass the test
 let number = /((^\+|^-)(\d+(\.\d*)?|\.\d+)(e((\+|-)\d+|\d+))?)|(^\.\d+(e((\+|-)\d+|\d+))?)|(^\d+(\.\d*)?(e((\+|-)\d+|\d+))?)/;
 
 // Tests:
