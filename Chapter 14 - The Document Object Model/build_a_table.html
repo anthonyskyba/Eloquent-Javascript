@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+
+        <h1>Mountains</h1>
+
+        <div id="mountains"></div>
+            
+        <script>
+          	/* code is pretty garbage but I didn't feel like re-writing
+            the whole thing after I noticed few crucial mistakes */
+            
+            const MOUNTAINS = [
+                {name: "Kilimanjaro", height: 5895, place: "Tanzania"},
+                {name: "Everest", height: 8848, place: "Nepal"},
+                {name: "Mount Fuji", height: 3776, place: "Japan"},
+                {name: "Vaalserberg", height: 323, place: "Netherlands"},
+                {name: "Denali", height: 6168, place: "United States"},
+                {name: "Popocatepetl", height: 5465, place: "Mexico"},
+                {name: "Mont Blanc", height: 4808, place: "Italy/France"}
+            ];
+
+            let row = 1
+            document.getElementById("mountains").appendChild(document.createElement("table"))
+          	for (let i = 0; i <= MOUNTAINS.length; i++)
+                document.getElementsByTagName("table")[0].appendChild(document.createElement("tr"))
+
+            for (const propertyName of Object.keys(MOUNTAINS[0]))
+                document.getElementsByTagName("tr")[0].appendChild(document.createElement("th"))
+                .append(document.createTextNode(propertyName))
+
+            for (const mountain of MOUNTAINS) {
+                
+                for (propertyName of Object.keys(mountain)) {
+                    document.getElementsByTagName("tr")[row].appendChild(document.createElement("td"))
+                    .appendChild(document.createTextNode(mountain[propertyName]))
+                }
+                row++
+            }
+        </script>
+    </body>
+</html>
