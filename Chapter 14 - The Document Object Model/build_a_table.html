@@ -28,13 +28,15 @@
 
             for (const propertyName of Object.keys(MOUNTAINS[0]))
                 document.getElementsByTagName("tr")[0].appendChild(document.createElement("th"))
-                .append(document.createTextNode(propertyName))
+                .append(document.createTextNode(propertyName)) 
 
             for (const mountain of MOUNTAINS) {
-                
                 for (propertyName of Object.keys(mountain)) {
                     document.getElementsByTagName("tr")[row].appendChild(document.createElement("td"))
                     .appendChild(document.createTextNode(mountain[propertyName]))
+                    
+                    if (typeof mountain[propertyName] == "number") document.getElementsByTagName("tr")[row]
+                    .getElementsByTagName("td")[1].style.textAlign = "right"
                 }
                 row++
             }
