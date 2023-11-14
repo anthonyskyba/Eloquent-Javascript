@@ -1,0 +1,33 @@
+<p id="balloon">balloon</p>
+<p id="explosion">explosion</p>
+
+<script>
+  // I'm not using the emojis because my laptop shows
+  // them as boxes and it's hard to tell them apart
+  
+  let balloon = document.getElementById("balloon")
+  let explosion = document.getElementById("explosion")
+  
+  explosion.style.display = "none"
+  balloon.style.fontSize = "30px"
+  
+  window.addEventListener("keydown", function keyEvent(event) {
+      let fontSize = balloon.style.fontSize
+      fontSize = Number(fontSize.slice(0, fontSize.length - 2))
+    
+      if (event.key == "ArrowDown") {
+          event.preventDefault()
+          balloon.style.fontSize = fontSize * 0.9 + "px"
+      } else if (event.key == "ArrowUp") {
+          event.preventDefault()
+      
+          if (fontSize * 1.1 >= 120) {
+              balloon.style.display = "none"
+              explosion.style.display = "block"
+              window.removeEventListener("keydown", keyEvent)
+          } else {
+              balloon.style.fontSize = fontSize * 1.1 + "px"
+          }
+      }
+  })
+</script>
