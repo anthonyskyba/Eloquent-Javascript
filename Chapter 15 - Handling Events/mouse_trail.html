@@ -4,24 +4,45 @@
         <style>
             .trail {
               position: absolute;
-              height: 6px; width: 6px;
-              border-radius: 3px;
+              height: 20px; width: 20px;
+              z-index: 99;
+              border-radius: 9px;
               background: teal;
+              display: none;
             }
             body {
-              height: 300px;
+              height: 1000px;
             }
         </style>
     </head>
     <body>
         <script>
+            let trailArray = []
+
+            for (let i = 0; i < 15; i++) {
+                let div = document.createElement("div");
+                document.body.appendChild(div);
+                div.className = "trail";
+                div.id = "div" + i;
+                trailArray.push(div)
+            }
+
+            let timesTriggered = 0;
+            let debounce = false;
+
             document.body.addEventListener("mousemove", function(event) {
-                for (let i = 0; i < 15; i++) {
-                    let div = document.createElement("div")
-                    document.body.appendChild(div)
-                    div.className = "trail"
+                if (!debounce) {
+                    debounce = true
+                    setTimeout(function() {
+                        let divMoved = trailArray[0]
+                        trailArray = trailArray.slice(1).concat(divMoved)
+                        divMoved.style.left = event.clientX + "px";
+                        divMoved.style.top = event.clientY + "px";
+                        divMoved.style.display = "block";
+                        debounce = false;
+                    }, 5);
                 }
-            })
+            });
         </script>
     </body>
 </html>
