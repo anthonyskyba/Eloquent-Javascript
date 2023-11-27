@@ -19,7 +19,7 @@
         <script>
             let trailArray = []
 
-            for (let i = 0; i < 15; i++) {
+            for (let i = 0; i < 10; i++) {
                 let div = document.createElement("div");
                 document.body.appendChild(div);
                 div.className = "trail";
@@ -29,19 +29,35 @@
 
             let timesTriggered = 0;
             let debounce = false;
+            let timeout;
 
             document.body.addEventListener("mousemove", function(event) {
-                if (!debounce) {
-                    debounce = true
-                    setTimeout(function() {
-                        let divMoved = trailArray[0]
-                        trailArray = trailArray.slice(1).concat(divMoved)
-                        divMoved.style.left = event.clientX + "px";
-                        divMoved.style.top = event.clientY + "px";
-                        divMoved.style.display = "block";
-                        debounce = false;
-                    }, 5);
+                clearTimeout(timeout);
+                timeout = setTimeout(function() {
+                    let removeTrail = () => {
+                        if (trailArray[0].style.display == "none") {
+                            if (trailArray.every(element => element.style.display == "none")) return
+                            trailArray.push(trailArray[0])
+                            trailArray.shift()
+                        }
+                        trailArray[0].style.display = "none";
+                        trailArray.push(trailArray[0]);
+                        trailArray.shift();
+                        requestAnimationFrame(removeTrail)
+                    }
+                    requestAnimationFrame(removeTrail)
+                }, 100);
+                
+                let move = () => {
+                    let divMoved = trailArray[0]
+                    trailArray = trailArray.slice(1).concat(divMoved)
+                    divMoved.style.left = event.clientX + "px";
+                    divMoved.style.top = event.clientY + "px";
+                    divMoved.style.display = "block";
+                    debounce = false;
                 }
+
+                requestAnimationFrame(move)
             });
         </script>
     </body>
